@@ -1,0 +1,45 @@
+# Node modules
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Logs
+logs
+*.log
+*.out
+*.pid
+*.seed
+*.csv
+*.tsbuildinfo
+debug.log
+yarn-debug.log
+
+# Build and dependencies
+dist/
+build/
+.cache/
+coverage/
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# IDE and editor settings
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# EJS cache files
+*.ejs~
+
+# Uploads folder
+src/uploads/
