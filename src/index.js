@@ -4,7 +4,10 @@ import {config} from 'dotenv';
 config()
 
 const PORT = process.env.PORT
-const HOST_URL = process.env.DEVELOPMENT_URL
+
+const ENVIRONMENT =process.env.NODE_ENV
+
+const HOST_URL = ENVIRONMENT === 'PRODUCTION' ? process.env.PRODUCTION_URL:process.env.DEVELOPMENT_URL
 
 app.listen(PORT,HOST_URL,()=>{
     console.log(`Server is Running on http://${HOST_URL}:${PORT}`)
