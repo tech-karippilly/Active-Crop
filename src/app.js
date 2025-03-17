@@ -5,6 +5,10 @@ import session from "express-session";
 import { fileURLToPath } from 'url';
 import path from 'path';
 import passport from 'passport'
+import swaggerSpec from './config/swaggerConfig.js';
+import swaggerDocument from './utils/swaggerDocuments.js';
+import swaggerUi from 'swagger-ui-express'
+import { SWAGGER } from './constants/api.js';
 
 const app = express()
 
@@ -45,6 +49,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+const combinedSwaggerSpec = {
+    ...swaggerSpec,
+    ...swaggerDocument
+ }
 
+ app.use(SWAGGER,swaggerUi.serve,swaggerUi.setup(combinedSwaggerSpec))
 
 export default app
