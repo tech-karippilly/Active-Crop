@@ -1,14 +1,16 @@
 import express from 'express'
 import cors from 'cors'
-import dotenv from 'dotenv';
 import session from "express-session";
+import swaggerUi from 'swagger-ui-express'
 import { fileURLToPath } from 'url';
 import path from 'path';
 import passport from 'passport'
 import swaggerSpec from './config/swaggerConfig.js';
 import swaggerDocument from './utils/swaggerDocuments.js';
-import swaggerUi from 'swagger-ui-express'
-import { SWAGGER } from './constants/api.js';
+
+import { ROLE_BASE, SWAGGER } from './constants/api.js';
+
+import RoleRoute from './route/role.js'
 
 const app = express()
 
@@ -55,5 +57,7 @@ const combinedSwaggerSpec = {
  }
 
  app.use(SWAGGER,swaggerUi.serve,swaggerUi.setup(combinedSwaggerSpec))
+
+ app.use(ROLE_BASE,RoleRoute)
 
 export default app
