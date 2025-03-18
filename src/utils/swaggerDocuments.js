@@ -323,6 +323,23 @@ const swaggerDocument = {
         }
       }
     },
+    "/admin": {
+      "get": {
+        "summary": "Render Admin Dashboard",
+        "tags": ["Admin Dashboard"],
+        "description": "Returns the Admin Dashboard HTML page.",
+        "responses": {
+          "200": {
+            "description": "Successfully rendered the dashboard page",
+            "content": {
+              "text/html": {
+                "example": "<html>...</html>"
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
 
