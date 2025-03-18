@@ -20,7 +20,7 @@ const CATEGOERY_BASE =`${ADMIN}/category`
 const CATEGOERY_LIST_PAGE = '/category-list-page'
 const CATAGOERY_LIST ='/category-list'
 const CATEGOERY_CREATE_PAGE = '/create-category-page'
-const CATAGOERY_CREATE = '/create-category'
+const CATEGOERY_CREATE = '/create-category'
 const CATEGOERY_EDIT_PAGE = '/update-category-page/:id'
 const CATAGOERY_EDIT ='/update-category'
 const CATAGOERY_DELETE ='/category-delete/:id'
@@ -42,5 +42,6 @@ export {
     CATEGOERY_BASE,
     CATEGOERY_LIST_PAGE,
     CATEGOERY_CREATE_PAGE,
+    CATEGOERY_CREATE,
     CATEGOERY_EDIT_PAGE
 }

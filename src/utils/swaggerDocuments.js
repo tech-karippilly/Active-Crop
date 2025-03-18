@@ -374,6 +374,86 @@ const swaggerDocument = {
         }
       }
     },
+    "/admin/category/create-category": {
+      "post": {
+        "summary": "Create a New Category",
+        "tags": ["Category Management"],
+        "description": "Creates a new category with an optional image upload.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cataName": {
+                    "type": "string",
+                    "description": "Name of the category",
+                    "example": "Electronics"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description of the category",
+                    "example": "Category for electronic gadgets"
+                  },
+                  "categoery_image": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Category image file"
+                  }
+                },
+                "required": ["cataName", "description"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Category created successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Category Created ...",
+                  "type": "success"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Category name already exists",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Category Name Already Exists",
+                  "type": "warning"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error or image upload failure",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Upload Failure": {
+                    "value": {
+                      "message": "Failed to upload image",
+                      "type": "error"
+                    }
+                  },
+                  "Server Error": {
+                    "value": {
+                      "message": "Internal Server Error",
+                      "type": "error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/admin/category/update-category-page/{id}": {
       "get": {
         "summary": "Render Category Edit Page",
@@ -390,7 +470,8 @@ const swaggerDocument = {
           }
         }
       }
-    }
+    },
+
   }
 }
 
