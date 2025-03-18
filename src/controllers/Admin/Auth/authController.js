@@ -79,9 +79,36 @@ const adminLogin = async (req,res) =>{
     }
 }
 
+const adminLogout = async (req, res) => {
+    try {
+
+        const globalMessage = { text: 'Logout Successfully!', type: 'success' };
+
+        req.session.destroy((err) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({ message: "Logout failed", type: "error" });
+            }
+            
+            
+            res.status(200).json({ 
+                message: "Logout successful", 
+                type: "success", 
+                redirect: "/admin/login",
+                globalMessage 
+            });
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal Server Error", type: "error" });
+    }
+}
+
+
 export {
     renderSignUpPage,
     createAdmin,
     renderSignInPage,
-    adminLogin
+    adminLogin,
+    adminLogout
 }

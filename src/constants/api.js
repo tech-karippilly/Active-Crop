@@ -12,6 +12,7 @@ const SIGNUP_PAGE = '/signup-page'
 const SIGNUP ='/signup'
 const SIGNIN_PAGE = '/signin-page'
 const SIGNIN ='/signin'
+const LOGOUT ='/logout'
 
 const ADMIN_DASHBOARD =`${ADMIN}/`
 
@@ -25,5 +26,6 @@ export {
     SIGNUP,
     SIGNIN_PAGE,
     SIGNIN,
+    LOGOUT,
     ADMIN_DASHBOARD
 }

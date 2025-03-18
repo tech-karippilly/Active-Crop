@@ -291,6 +291,38 @@ const swaggerDocument = {
         }
       }
     },
+    "/admin/auth/logout": {
+      "get": {
+        "summary": "Admin Logout",
+        "tags": ["Admin Authentication"],
+        "description": "Logs out the admin by destroying the session.",
+        "responses": {
+          "200": {
+            "description": "Logout successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Logout successful",
+                  "type": "success",
+                  "redirect": "/admin/login"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Logout failed due to server error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Logout failed",
+                  "type": "error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
   }
 }
 
