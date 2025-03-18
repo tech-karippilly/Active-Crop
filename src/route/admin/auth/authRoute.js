@@ -8,4 +8,5 @@ route.get(SIGNUP_PAGE,renderSignUpPage)
 route.post(SIGNUP,createAdmin)
 route.get(SIGNIN_PAGE,renderSignInPage)
 route.post(SIGNIN,adminLogin)
+
 export default route

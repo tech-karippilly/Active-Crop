@@ -72,7 +72,7 @@ const adminLogin = async (req,res) =>{
         
         req.session.globalMessage = { text: 'Login Successfully!', type: 'success' };
 
-        res.status(200).json({message:"Login Successfull ..." ,type:'success',redirect:''})
+        res.status(200).json({message:"Login Successfull ..." ,type:'success',redirect:'/admin/'})
     }catch(error){
         console.log(error)
         res.status(500).json({message:"Internal Server Error" , type:'error'})

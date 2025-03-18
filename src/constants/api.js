@@ -1,6 +1,7 @@
 
 const SWAGGER ='/api-docs'
 
+const BASEURL = '/'
 const ADMIN = '/admin'
 
 const ROLE_BASE = `${ADMIN}/role`
@@ -12,7 +13,10 @@ const SIGNUP ='/signup'
 const SIGNIN_PAGE = '/signin-page'
 const SIGNIN ='/signin'
 
+const ADMIN_DASHBOARD =`${ADMIN}/`
+
 export {
+    BASEURL,
     SWAGGER,
     ROLE_BASE,
     CREATE_ROLE,
@@ -20,5 +24,6 @@ export {
     SIGNUP_PAGE,
     SIGNUP,
     SIGNIN_PAGE,
-    SIGNIN
+    SIGNIN,
+    ADMIN_DASHBOARD
 }
