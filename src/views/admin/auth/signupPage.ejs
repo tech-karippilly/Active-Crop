@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../partials/header.ejs') %>
+
+    <body class="flex items-center justify-center min-h-screen bg-gray-100">
+        <%- include('../../partials/alert') %>
+        <div class="w-full max-w-md p-8 space-y-6 bg-white shadow-lg rounded-xl">
+
+            <!-- Logo Section -->
+            <div class="flex justify-center">
+                <img src="../../../public/asstes/images/logo.jpg" alt="Active Crop Logo" class="w-24 h-24">
+            </div>
+
+            <h2 class="text-2xl font-bold text-center text-gray-800">Admin Sign Up</h2>
+
+            <form id="signupForm" class="space-y-4">
+                <div>
+                    <label class="block text-gray-700">Full Name</label>
+                    <input type="text" id="fullName" placeholder="John Doe"
+                        class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <p id="nameError" class="text-red-500 text-sm hidden">Full Name is required.</p>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700">Email</label>
+                    <input type="email" id="email" placeholder="admin@example.com"
+                        class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <p id="emailError" class="text-red-500 text-sm hidden">Enter a valid email address.</p>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700">Password</label>
+                    <input type="password" id="password" placeholder="••••••••"
+                        class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <p id="passwordError" class="text-red-500 text-sm hidden">Password must be at least 6 characters.
+                    </p>
+                </div>
+
+                <div>
+                    <label class="block text-gray-700">Confirm Password</label>
+                    <input type="password" id="confirmPassword" placeholder="••••••••"
+                        class="w-full px-4 py-2 mt-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <p id="confirmPasswordError" class="text-red-500 text-sm hidden">Passwords do not match.</p>
+                </div>
+
+                <div class="flex items-center">
+                    <input type="checkbox" id="terms"
+                        class="w-4 h-4 text-blue-500 border-gray-300 rounded focus:ring-blue-500">
+                    <label class="ml-2 text-gray-700">I agree to the <a href="#"
+                            class="text-blue-600 hover:underline">terms & conditions</a></label>
+                </div>
+                <p id="termsError" class="text-red-500 text-sm hidden">You must agree to the terms & conditions.</p>
+
+                <button type="submit"
+                    class="w-full px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300">
+                    Sign Up
+                </button>
+            </form>
+
+            <p class="text-sm text-center text-gray-600">
+                Already have an account? <a href="#" class="text-blue-600 hover:underline">Log in</a>
+            </p>
+        </div>
+        <script>
+            document.getElementById('signupForm').addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent form submission
+
+                // Get form values
+                const fullName = document.getElementById('fullName').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value.trim();
+                const confirmPassword = document.getElementById('confirmPassword').value.trim();
+                const termsChecked = document.getElementById('terms').checked;
+
+                let isValid = true;
+
+                // Validate Full Name
+                if (fullName === '') {
+                    document.getElementById('nameError').classList.remove('hidden');
+                    isValid = false;
+                } else {
+                    document.getElementById('nameError').classList.add('hidden');
+                }
+
+                // Validate Email
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(email)) {
+                    document.getElementById('emailError').classList.remove('hidden');
+                    isValid = false;
+                } else {
+                    document.getElementById('emailError').classList.add('hidden');
+                }
+
+                // Validate Password
+                if (password.length < 6) {
+                    document.getElementById('passwordError').classList.remove('hidden');
+                    isValid = false;
+                } else {
+                    document.getElementById('passwordError').classList.add('hidden');
+                }
+
+                // Validate Confirm Password
+                if (password !== confirmPassword) {
+                    document.getElementById('confirmPasswordError').classList.remove('hidden');
+                    isValid = false;
+                } else {
+                    document.getElementById('confirmPasswordError').classList.add('hidden');
+                }
+
+                // Validate Terms & Conditions
+                if (!termsChecked) {
+                    document.getElementById('termsError').classList.remove('hidden');
+                    isValid = false;
+                } else {
+                    document.getElementById('termsError').classList.add('hidden');
+                }
+
+                // If everything is valid, submit the form
+                if (isValid) {
+                    let params = {
+                        fullName,
+                        email,
+                        password
+                    }
+                    fetch('/admin/auth/signup', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(params)
+                    }).then((response) => response.json())
+                        .then((data) => {
+                            console.log(data)
+                        }).catch((error) => {
+                            console.log(error.message)
+                        })
+                }
+            });
+        </script>
+    </body>
+
+</html>

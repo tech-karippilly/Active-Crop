@@ -8,16 +8,18 @@ import passport from 'passport'
 import swaggerSpec from './config/swaggerConfig.js';
 import swaggerDocument from './utils/swaggerDocuments.js';
 
-import { ROLE_BASE, SWAGGER } from './constants/api.js';
+import { ADMIN_AUTH, ROLE_BASE, SWAGGER } from './constants/api.js';
 
 import RoleRoute from './route/role.js'
+
+import AdminAuthRoute from './route/admin/auth/authRoute.js'
 
 const app = express()
 
 
 app.use(cors())
-app.use(express.json())
-app.use(express.urlencoded({ extends: true }))
+app.use(express.json());  // Parses JSON bodies
+app.use(express.urlencoded({ extended: true })); 
 
 app.use(function (req, res, next) {
     res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
@@ -59,5 +61,6 @@ const combinedSwaggerSpec = {
  app.use(SWAGGER,swaggerUi.serve,swaggerUi.setup(combinedSwaggerSpec))
 
  app.use(ROLE_BASE,RoleRoute)
+ app.use(ADMIN_AUTH,AdminAuthRoute)
 
 export default app
