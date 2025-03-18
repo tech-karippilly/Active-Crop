@@ -18,7 +18,7 @@ const app = express()
 
 
 app.use(cors())
-app.use(express.json());  // Parses JSON bodies
+app.use(express.json());  
 app.use(express.urlencoded({ extended: true })); 
 
 app.use(function (req, res, next) {
@@ -30,13 +30,18 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 
-
 app.use(session({
     secret: process.env.SESSION,
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false }
 }))
+
+app.use((req, res, next) => {
+    res.locals.globalMessage = req.session.globalMessage || null;
+    req.session.globalMessage = null;
+    next();
+});
 
 app.all('/*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");

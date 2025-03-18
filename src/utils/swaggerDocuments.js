@@ -194,6 +194,103 @@ const swaggerDocument = {
         }
       }
     },
+    "/admin/auth/signin-page": {
+      "get": {
+        "summary": "Render Admin Sign-In Page",
+        "description": "Returns the Admin Sign-In HTML page.",
+        "tags": ["Admin Authentication"],
+        "responses": {
+          "200": {
+            "description": "Successfully rendered the sign-in page",
+            "content": {
+              "text/html": {
+                "example": "<html>...</html>"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/auth/signin": {
+      "post": {
+        "summary": "Admin Sign-In",
+        "tags": ["Admin Authentication"],
+        "description": "Authenticates an admin and returns access and refresh tokens.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "admin@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "securePassword123"
+                  }
+                },
+                "required": ["email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Login Successful ...",
+                  "type": "success",
+                  "redirect": ""
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid credentials or user issues",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "User Not Found": {
+                    "value": {
+                      "message": "User not Found",
+                      "type": "warning"
+                    }
+                  },
+                  "User Verification Issue": {
+                    "value": {
+                      "message": "Unable to Login , Please Contact Tech Support",
+                      "type": "warning"
+                    }
+                  },
+                  "Invalid Credentials": {
+                    "value": {
+                      "message": "Password or Email is Invalid",
+                      "type": "error"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "example": {
+                  "message": "Internal Server Error",
+                  "type": "error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
   }
 }
 

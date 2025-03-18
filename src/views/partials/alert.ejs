@@ -1,17 +1,35 @@
 <% if (message) { %>
-    <div id="alertBox" class="p-4 mb-4 text-sm font-medium border rounded-lg shadow-md transition-opacity duration-500 ease-out opacity-100
-      <% if (type === 'success') { %> bg-green-100 text-green-800 border-green-300 <% } %>
-      <% if (type === 'error') { %> bg-red-100 text-red-800 border-red-300 <% } %>
-      <% if (type === 'warning') { %> bg-yellow-100 text-yellow-800 border-yellow-300 <% } %>
-      <% if (type === 'info') { %> bg-blue-100 text-blue-800 border-blue-300 <% } %>">
-      <%= message %>
-    </div>
-  
-    <script>
-      setTimeout(() => {
-        document.getElementById("alertBox").classList.add("opacity-0");
-        setTimeout(() => document.getElementById("alertBox").remove(), 500);
-      }, 2000);
-    </script>
+
+  <div id="alertBox" class="absolute right-5 top-5 p-4 mb-4 text-sm font-medium border rounded-lg shadow-md transition-opacity duration-500 ease-out opacity-100
+  <% if (type === 'success') { %> bg-green-100 text-green-800 border-green-300 <% } %>
+  <% if (type === 'error') { %> bg-red-100 text-red-800 border-red-300 <% } %>
+  <% if (type === 'warning') { %> bg-yellow-100 text-yellow-800 border-yellow-300 <% } %>
+  <% if (type === 'info') { %> bg-blue-100 text-blue-800 border-blue-300 <% } %>">
+    <%= message %>
+  </div>
+
+  <script>
+    setTimeout(() => {
+      document.getElementById("alertBox").classList.add("opacity-0");
+      setTimeout(() => document.getElementById("alertBox").remove(), 500);
+    }, 2000);
+  </script>
   <% } %>
-  
+
+
+    <% if (globalMessage) { %>
+
+      <div id="alertBox" class="absolute right-5 top-5 p-4 mb-4 text-sm font-medium border rounded-lg shadow-md transition-opacity duration-500 ease-out opacity-100
+    <% if (globalMessage.type === 'success') { %> bg-green-100 text-green-800 border-green-300 <% } %>
+    <% if (globalMessage.type === 'error') { %> bg-red-100 text-red-800 border-red-300 <% } %>
+    <% if (globalMessage.type === 'warning') { %> bg-yellow-100 text-yellow-800 border-yellow-300 <% } %>
+    <% if (globalMessage.type === 'info') { %> bg-blue-100 text-blue-800 border-blue-300 <% } %>">
+        <%= globalMessage.text %>
+      </div>
+      <script>
+        setTimeout(() => {
+          document.getElementById("alertBox").classList.add("opacity-0");
+          setTimeout(() => document.getElementById("alertBox").remove(), 500);
+        }, 2000);
+      </script>
+      <% } %>
