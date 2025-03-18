@@ -339,6 +339,57 @@ const swaggerDocument = {
           }
         }
       }
+    },
+    "/admin/category/category-list-page": {
+      "get": {
+        "summary": "Render Category List Page",
+        "tags": ["Category Management"],
+        "description": "Returns the Category List HTML page.",
+        "responses": {
+          "200": {
+            "description": "Successfully rendered the category list page",
+            "content": {
+              "text/html": {
+                "example": "<html>...</html>"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/category/create-category-page": {
+      "get": {
+        "summary": "Render Category Create Page",
+        "tags": ["Category Management"],
+        "description": "Returns the Create Category HTML page.",
+        "responses": {
+          "200": {
+            "description": "Successfully rendered the create category page",
+            "content": {
+              "text/html": {
+                "example": "<html>...</html>"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/category/update-category-page/{id}": {
+      "get": {
+        "summary": "Render Category Edit Page",
+        "tags": ["Category Management"],
+        "description": "Returns the Edit Category HTML page.",
+        "responses": {
+          "200": {
+            "description": "Successfully rendered the edit category page",
+            "content": {
+              "text/html": {
+                "example": "<html>...</html>"
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

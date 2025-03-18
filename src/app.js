@@ -4,16 +4,16 @@ import session from "express-session";
 import swaggerUi from 'swagger-ui-express'
 import { fileURLToPath } from 'url';
 import path from 'path';
-import passport from 'passport'
 import swaggerSpec from './config/swaggerConfig.js';
 import swaggerDocument from './utils/swaggerDocuments.js';
 
-import { ADMIN_AUTH, ADMIN_DASHBOARD, ROLE_BASE, SWAGGER } from './constants/api.js';
+import { ADMIN_AUTH, ADMIN_DASHBOARD, CATEGOERY_BASE, ROLE_BASE, SWAGGER } from './constants/api.js';
 
 import RoleRoute from './route/role.js'
 
 import AdminAuthRoute from './route/admin/auth/authRoute.js'
 import AdminDashboardRoute from './route/admin/dashboard/dashboardRoute.js'
+import CatagoeryRoute from  './route/admin/catagoery/catagoeryRoute.js'
 
 const app = express()
 
@@ -69,5 +69,6 @@ app.use(SWAGGER, swaggerUi.serve, swaggerUi.setup(combinedSwaggerSpec))
 app.use(ROLE_BASE, RoleRoute)
 app.use(ADMIN_AUTH, AdminAuthRoute)
 app.use(ADMIN_DASHBOARD, AdminDashboardRoute)
+app.use(CATEGOERY_BASE,CatagoeryRoute)
 
 export default app
