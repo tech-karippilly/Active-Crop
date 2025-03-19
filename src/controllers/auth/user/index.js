@@ -215,7 +215,7 @@ async function forgotEmailSend(req, res) {
             return renderPage(res, HTTP_CONFICT, USER_FORGOT_EMAIL_SEND_PAGE, 'User not Found', ALERT_DANGER, '')
         }
 
-        const forgotPasswrodPage = `http://localhost:3000/auth/reset-password?email=${email}`
+        const forgotPasswrodPage = `http://www.activecrop.shop/auth/reset-password?email=${email}`
 
         sendresetMail(email, forgotPasswrodPage)
         renderPage(res, HTTP_SUCCESS, USER_FORGOT_EMAIL_SEND_PAGE, 'Email send sucessfully', ALERT_SUCCESS, '/auth/login')
