@@ -10,7 +10,7 @@ const options ={
         },
         servers:[
             {
-                url:'http://www.activecrop.shop'
+                url:'https://www.activecrop.shop'
             },
         ],
     },
