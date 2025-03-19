@@ -172,7 +172,13 @@
                                 <ul class="list-group" id="transaction-list">
                                     <% transactions.forEach(transaction => { %>
                                         <li class="list-group-item d-flex justify-content-between">
-                                            <span class="text-capitalize"><%= transaction.description %></span>
+                                            <div>
+                                                <span class="text-capitalize"><%= transaction.description %></span>
+                                                <br>
+                                                <small class="text-muted">
+                                                    <%= new Date(transaction.createdAt).toLocaleDateString('en-GB') %>
+                                                </small>
+                                            </div>
                                             <span class="<%= transaction.transactionMode === 'debit' ? 'text-danger' : 'text-success' %>">
                                                 <%= transaction.transactionMode === 'debit' ? '-' : '+' %>₹<%= Math.abs(transaction.amount) %>
                                             </span>
