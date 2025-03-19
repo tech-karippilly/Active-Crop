@@ -23,10 +23,15 @@ async function adminLogin(req, res) {
         }
 
         // Find user by email
-        const user = await User.findOne({ email });
+        console.log(email)
+        const users= await User.find();
+        console.log(users)
+        const user = await User.findOne({ email: email.trim().toLowerCase() });
         if (!user) {
             return renderResponse(ADMIN_LOGIN_PAGE, res, HTTP_CONFICT, 'User not found', ALERT_WARNING, '');
         }
+
+        console.log(user)
 
         // Check if user is verified
         if (!user.isVerifyed) {
@@ -34,16 +39,16 @@ async function adminLogin(req, res) {
         }
 
         // Validate password
-        // const isPasswordValid = await user.comparePassword(password);
-        // if (!isPasswordValid) {
-        //     return renderResponse(ADMIN_LOGIN_PAGE,res, HTTP_BAD_REQUEST, 'Invalid username or password. Please try again.', ALERT_DANGER, '');
-        // }
+        const isPasswordValid = await user.comparePassword(password);
+        if (!isPasswordValid) {
+            return renderResponse(ADMIN_LOGIN_PAGE,res, HTTP_BAD_REQUEST, 'Invalid username or password. Please try again.', ALERT_DANGER, '');
+        }
 
         // Generate tokens
         const accessToken = jwt.sign(
             { userId: user._id, email: user.email, role: user.role },
             process.env.JWT_SECRET_ACCESS_TOKEN,
-            { expiresIn: '1m' }
+            { expiresIn: '20m' }
         );
 
         const refreshToken = jwt.sign(
@@ -78,7 +83,7 @@ async function createAdmin(req, res) {
             const errorMessage = validationErrors.join(" ");
             return renderResponse(ADMIN_SIGNUP_PAGE, res, HTTP_BAD_REQUEST, errorMessage, ALERT_DANGER, '');
         }
-        const userRole = await Role.findOne({ roleName: 'SuperAdmin' });
+        const userRole = await Role.findOne({ roleName: 'Admin' });
 
         const existingUser = await User.findOne({ $or: [{ userName }, { email: userEmail }] });
 
@@ -101,6 +106,7 @@ async function createAdmin(req, res) {
         await newUser.save();
         renderResponse(ADMIN_SIGNUP_PAGE, res, HTTP_SUCCESS, 'User Admin Created', ALERT_SUCCESS, ADMIN_DASHBOARD);
     } catch (error) {
+        console.log(error.message)
         renderResponse(ADMIN_SIGNUP_PAGE, res, HTTP_SERVER_ERROR, 'Internal Server Error', ALERT_DANGER, '');
     }
 }
