@@ -12,6 +12,10 @@ const categoerySchema  =mongoose.Schema({
     image:{
         type:String,
         required:true
+    },
+    sales_count:{
+        type:Number,
+        default:0
     }
 },
 {
