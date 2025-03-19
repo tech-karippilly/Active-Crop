@@ -8,6 +8,8 @@ import { generateReceiptNumber } from "../../../utils/helperfunction.js"
 import crypto from 'crypto'
 config()
 
+console.log(process.env.KEY_ID)
+console.log(process.env.KEY_SECRETE)
 const razorpay = new Razorpay({
     key_id: process.env.KEY_ID,
     key_secret: process.env.KEY_SECRETE
@@ -359,7 +361,7 @@ async function placeOreder(req, res) {
         }
 
     } catch (error) {
-        console.log(error.message)
+        console.log("error",error)
         res.status(500).json({ message: 'Internal Server Error', error: error.message, alertType: 'alert-danger' });
     }
 }

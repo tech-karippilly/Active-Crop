@@ -42,7 +42,8 @@ const renderHomepage = async (req, res) => {
 
         return res.status(HTTP_SUCCESS).render(USER_HOME_PAGE, { isLogin: false, catagories,topProducts, currentUser: {} })
     } catch (error) {
-        res.status(HTTP_SERVER_ERROR).render(USER_HOME_PAGE, { isLogin: false, catagories: [], currentUser: {} })
+      console.log(error.message)
+        res.status(HTTP_SERVER_ERROR).render(USER_HOME_PAGE, { isLogin: false, catagories: [], topProducts:[],currentUser: {} })
     }
 }
 
