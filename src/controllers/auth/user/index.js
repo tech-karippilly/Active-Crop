@@ -1,4 +1,4 @@
-import { OTPModel, Referal, Role, Transactions, User, Wallet } from '../../../models/index.js'
+import { Cart, OTPModel, Referal, Role, Transactions, User, Wallet } from '../../../models/index.js'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv';
 import { sendresetMail } from '../../../utils/mailSender.js';
@@ -111,7 +111,8 @@ async function createUser(req, res) {
             return renderPage(res, HTTP_BAD_REQUEST, USER_SIGNUP_PAGE, validation, ALERT_WARNING, '')
         }
 
-        const userRole = await Role.findOne({ roleName: 'User' });
+        const userRole = await Role.findOne({ roleName: 'Customer' });
+
         const user = {
             firstName,
             lastName,
@@ -152,8 +153,20 @@ async function createUser(req, res) {
         const otpPayload = { email, otp };
         const otpBody = new OTPModel(otpPayload);
 
-        await otpBody.save();
+
+        
         await newUser.save();
+
+        const newWallet = Wallet({
+            userId:newUser._id
+        })
+        const newCart = Cart({
+            user_id:newUser._id
+        })
+
+        await otpBody.save();
+        await newWallet.save();
+        await newCart.save();
 
         if (referal) {
             const referalDetails = await Referal.findOne({ referralCode: referal })
