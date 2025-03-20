@@ -66,6 +66,9 @@ async function loginUser(req, res) {
 
 async function googleLogin(req, res) {
     try {
+
+        console.log("Request",req.user)
+
         const user = req.user
 
         if (user.isBlocked) {
