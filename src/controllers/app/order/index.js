@@ -52,7 +52,7 @@ const renderCheckout = async (req, res) => {
         const filteredItems = await Promise.all(
             cart.items.map(async (item) => {
                 const product = await Product.findById(item.product_id);
-                return product.status !== 'Blocked'; // Keep only non-blocked products
+                return product.status !== 'Blocked'; 
             })
         );
 
@@ -96,17 +96,6 @@ async function placeOreder(req, res) {
         const address = await Address.findById(addressId);
 
         const haveQuantity = await checkProductQuantity(cart.items)
-        console.log("haveQuantity", haveQuantity)
-
-        // for (const item of cart.items) {
-        //     const product = await Product.findById(item.product_id);
-        //     if (!product || product.stock_quantity < item.quantity) {
-        //         return res.status(400).json({ 
-        //             message: `Insufficient stock for product: ${item.product_name}`, 
-        //             alertType: 'alert-danger' 
-        //         });
-        //     }
-        // }
 
         if (paymentMethod === 'razorpay') {
             const options = {
@@ -194,14 +183,12 @@ async function placeOreder(req, res) {
                 const currentWallet = await Wallet.findOne({ userId });
 
                 if (!currentWallet) {
-                    return res.status(400).json({ message: 'Wallet Error. Please try another method.', alertType: 'alert-danger' });
+                    return res.status(400).json({ message: 'Insufficient balance', alertType: 'alert-danger' });
                 }
 
                 let totalPrice = Math.max(cart.total_price - currentWallet.balance, 0);
                 let remainingAmount = Math.max(cart.total_price - currentWallet.balance, 0);
                 let walletDeduction = Math.min(currentWallet.balance, cart.total_price);
-
-                
 
                 let newOrderDetails = {
                     orderNumber: totalPrice !== 0 ? null : generateOrderNumber(),
@@ -296,7 +283,6 @@ async function placeOreder(req, res) {
                     });
                 }
 
-                // If wallet covers full price, process payment
                 const newOrder = new Order(newOrderDetails);
                 await newOrder.save();
 
@@ -362,7 +348,6 @@ async function checkProductQuantity(productList) {
 
     return errorList.length === 0 ? true : false
 }
-
 
 async function verifyPayment(req, res) {
     try {
