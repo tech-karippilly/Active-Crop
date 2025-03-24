@@ -117,117 +117,80 @@ async function placeOreder(req, res) {
 
             const razorPayOrder = await razorpay.orders.create(options)
 
-            const razorpayOrder = createOrder.createRazorpayOrder({
+            const razorpayOrders = createOrder.createRazorpayOrder({
                 razorPayOrder,
                 user,
                 cart,
                 address,
                 paymentMethod
             });
-            console.log("razorpayOrder",razorpayOrder)
-            // const newOrderDetails = {
-            //     orderNumber: razorPayOrder.id,
-            //     user: user._id,
-            //     items: cart.items,
-            //     shippingAddress: {
-            //         fullName: user.getFullName(),
-            //         address_1: address.address_line_1,
-            //         address_2: address.address_line_2,
-            //         city: address.city,
-            //         postalCode: address.pincode,
-            //         landmark: address.landmark,
-            //         country: 'India',
-            //         phone: address.phone,
-            //         state: address.state
-            //     },
-            //     paymentMethod,
-            //     paymentStatus: 'Pending',
-            //     totalAmount: cart.total_price,
-            //     receipt: razorPayOrder.receipt,
-            //     discount: cart.discount,
-            //     appliedCoupon: cart.appliedCoupon
-            // };
 
-            // const newOrder = new Order(newOrderDetails);
-            // await newOrder.save();
+            const newOrder = new Order(razorpayOrders);
+            await newOrder.save();
 
-            // cart.status = 'ordered';
-            // await cart.save();
-
-            // const optionsRazorPay = {
-            //     key: process.env.KEY_ID,
-            //     amount: cart.total_price,
-            //     currency: "INR",
-            //     description: "Active Corp",
-            //     user: {
-            //         name: user.getFullName(),
-            //         email: user.email || user.user,
-            //         contact: user.phone
-            //     },
-            //     order_id: razorPayOrder.id,
-            //     redirect: `http://localhost:3000/orders/order-success/${razorPayOrder.id}`,
-            //     redirect: true,
-            // }
-
-            // for (const item of cart.items) {
-            //     const product = await Product.findById(item.product_id)
-            //     if (product.stock_quantity >= item.quantity) {
-            //         product.stock_quantity -= item.quantity;
-            //         await product.save();
-            //     }
-            // }
-            // cart.status = 'ordered';
-            // await cart.save();
-            return res.status(200).json({ message: "Razor Pay Order Created", alertType: 'alert-success', optionsRazorPay })
-
-        } else if (paymentMethod === 'cod') {
-            const newOrderDetails = {
-                orderNumber: generateOrderNumber(),
-                user: user._id,
-                items: cart.items,
-                shippingAddress: {
-                    fullName: user.getFullName(),
-                    address_1: address.address_line_1,
-                    address_2: address.address_line_2,
-                    city: address.city,
-                    postalCode: address.pincode,
-                    landmark: address.landmark,
-                    country: 'India',
-                    phone: address.phone,
-                    state: address.state
-                },
-                paymentMethod,
-                paymentStatus: 'Pending',
-                totalAmount: cart.total_price,
-                receipt: generateReceiptNumber(),
-                discount: cart.discount,
-                appliedCoupon: cart.appliedCoupon
-            };
             for (const item of cart.items) {
                 const product = await Product.findById(item.product_id)
                 if (product.stock_quantity >= item.quantity) {
                     product.stock_quantity -= item.quantity;
                     await product.save();
                 }
-                cart.status = 'ordered';
-                await cart.save();
-                const newOrder = new Order(newOrderDetails);
-                await newOrder.save();
-                const newTransactions = await Transactions({
-                    transactionType: 'purchase',
-                    type: 'order',
-                    orderId: newOrder._id,
-                    walletId: currentWallet._id,
-                    transactionMode: 'credit',
-                    source: 'COD',
-                    description: 'Cash on Delivery',
-                    amount: newOrder.totalAmount
-                })
-                await newTransactions.save()
-                return res.status(200).json({ message: 'Order placed successfully', alertType: 'alert-success', redirect: `/orders/order-success/${newOrder._id}` });
             }
+
+            cart.items=[]
+            await cart.save()
+         
+            const optionsRazorPay = {
+                key: process.env.KEY_ID,
+                amount: cart.total_price,
+                currency: "INR",
+                description: "Active Corp",
+                user: {
+                    name: user.getFullName(),
+                    email: user.email || user.user,
+                    contact: user.phone
+                },
+                order_id: razorPayOrder.id,
+                redirect: `http://localhost:3000/orders/order-success/${razorPayOrder.id}`,
+                redirect: true,
+            }
+            
+            return res.status(200).json({ message: "Razor Pay Order Created", alertType: 'alert-success', optionsRazorPay })
+
+        } else if (paymentMethod === 'cod') {
+
+            const codOrder = createOrder.createCODOrder({
+                user,
+                cart,
+                address,
+                paymentMethod,
+                generateOrderNumber,
+                generateReceiptNumber
+            })
+            for (const item of cart.items) {
+                const product = await Product.findById(item.product_id)
+                if (product.stock_quantity >= item.quantity) {
+                    product.stock_quantity -= item.quantity;
+                    await product.save();
+                }
+            }
+            cart.items=[]
+            await cart.save();
+            const newOrder = new Order(codOrder);
+            await newOrder.save();
+            const newTransactions = await Transactions({
+                transactionType: 'purchase',
+                type: 'order',
+                orderId: newOrder._id,
+                transactionMode: 'credit',
+                source: 'COD',
+                description: 'Cash on Delivery',
+                amount: newOrder.totalAmount
+            })
+            await newTransactions.save()
+            return res.status(200).json({ message: 'Order placed successfully', alertType: 'alert-success', redirect: `/orders/order-success/${newOrder._id}` });
         } else if (paymentMethod === 'wallet') {
             try {
+
                 const currentWallet = await Wallet.findOne({ userId });
 
                 if (!currentWallet) {
@@ -237,6 +200,8 @@ async function placeOreder(req, res) {
                 let totalPrice = Math.max(cart.total_price - currentWallet.balance, 0);
                 let remainingAmount = Math.max(cart.total_price - currentWallet.balance, 0);
                 let walletDeduction = Math.min(currentWallet.balance, cart.total_price);
+
+                
 
                 let newOrderDetails = {
                     orderNumber: totalPrice !== 0 ? null : generateOrderNumber(),
