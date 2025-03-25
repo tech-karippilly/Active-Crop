@@ -25,7 +25,6 @@ export async function renderCreateAddressPage(req, res) {
         const access_token = req.session.accessToken
         const jwtDecode = jwt.verify(access_token, process.env.JWT_SECRET_ACCESS_TOKEN)
         const userId = jwtDecode.userId
-        const user = await User.findById(userId)
         const currentUser = await User.findById(userId)
         res.status(HTTP_SUCCESS).render(USER_ADDRESS_CREATE_PAGE, { currentUser })
     } catch (errr) {
@@ -41,7 +40,9 @@ async function createAddress(req, res) {
         if (access_token) {
             const jwtDecode = jwt.verify(access_token, process.env.JWT_SECRET_ACCESS_TOKEN)
             const userId = jwtDecode.userId
+            
             const currentUser = await User.findById(userId)
+
             const address = await Address.findOne({ nickname, address_line_1, address_line_2 })
 
             if (address) {
@@ -70,6 +71,7 @@ async function createAddress(req, res) {
 
 
     } catch (err) {
+        console.log(err.message)
         res.status(HTTP_SERVER_ERROR).render(USER_ADDRESS_CREATE_PAGE)
     }
 }
