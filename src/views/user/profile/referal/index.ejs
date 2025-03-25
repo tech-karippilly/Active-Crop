@@ -395,6 +395,26 @@
             editButton.style.display = 'block';
         });
 
+        function copyReferralLink() {
+            const referralInput = document.getElementById("referral-link");
+            referralInput.select();
+            referralInput.setSelectionRange(0, 99999); // For mobile devices
+
+            navigator.clipboard.writeText(referralInput.value)
+                .then(() => {
+                    alertMessage.classList.add('alert-success')
+                    alertMessage.innerHTML = 'Linked Coppied'
+                    setTimeout(() => {
+                        alertMessage.classList.remove('alert-success')
+                        alertMessage.innerHTML = ''
+                    }, 3000)
+                })
+                .catch(err => {
+                    console.error("Failed to copy: ", err);
+                });
+        }
+
+
     </script>
 
 
