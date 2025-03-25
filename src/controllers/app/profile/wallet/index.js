@@ -17,7 +17,8 @@ async function renderWalletPage(req, res) {
             const userId = jwtDecode.userId
             const currentUser = await User.findById(userId)
             const wallet = await Wallet.findOne({ userId })
-            const transactions = await Transactions.find({type:'wallet'}).sort({createdAt: -1}).limit(10)
+
+            const transactions = await Transactions.find({type:'wallet',walletId:wallet._id}).sort({createdAt: -1}).limit(10)
             if (!wallet) {
                 const newWallet = {
                     userId: userId
