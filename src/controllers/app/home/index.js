@@ -7,7 +7,7 @@ import jwt from 'jsonwebtoken'
 
 const renderHomepage = async (req, res) => {
     try {
-        const catagories = await Categoery.find()
+        const categories = await Categoery.find()
         const access_token = req.session.accessToken
         const topProducts = await Product.aggregate([
             {
@@ -35,15 +35,15 @@ const renderHomepage = async (req, res) => {
 
             
 
-            return res.status(HTTP_SUCCESS).render(USER_HOME_PAGE, { isLogin: true, catagories,topProducts, currentUser, cartLength })
+            return res.status(HTTP_SUCCESS).render(USER_HOME_PAGE, { isLogin: true, categories,topProducts, currentUser, cartLength })
         }
 
 
 
-        return res.status(HTTP_SUCCESS).render(USER_HOME_PAGE, { isLogin: false, catagories,topProducts, currentUser: {} })
+        return res.status(HTTP_SUCCESS).render(USER_HOME_PAGE, { isLogin: false, categories,topProducts, currentUser: {} })
     } catch (error) {
       console.log(error.message)
-        res.status(HTTP_SERVER_ERROR).render(USER_HOME_PAGE, { isLogin: false, catagories: [], topProducts:[],currentUser: {} })
+        res.status(HTTP_SERVER_ERROR).render(USER_HOME_PAGE, { isLogin: false, categories: [], topProducts:[],currentUser: {} })
     }
 }
 

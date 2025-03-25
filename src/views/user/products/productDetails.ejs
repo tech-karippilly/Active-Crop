@@ -172,7 +172,7 @@
                             <div class="carousel-inner">
                                 <% Object.keys(products.images).forEach(function (key, index) { %>
                                     <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
-                                        <img src="/<%= products.images[key] %>" class="d-block w-100"
+                                        <img src="<%= products.images[key] %>" class="d-block w-100"
                                             alt="Product Image <%= parseInt(key) + 1 %>"
                                             style="height: 400px; object-fit:fill; border-radius: 10px;">
                                     </div>
