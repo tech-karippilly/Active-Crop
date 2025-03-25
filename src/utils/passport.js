@@ -1,7 +1,7 @@
 import Passport from "passport";
 import GoogleStrategy from 'passport-google-oidc'
 import dotenv from 'dotenv';
-import { User } from "../models/index.js";
+import { User, Role ,Wallet,Cart} from "../models/index.js";
 dotenv.config();
 
 
@@ -12,7 +12,6 @@ function createSatergyGoogle() {
         callbackURL: 'https://www.activecrop.shop/auth/google/callback',
         scope: ['profile', 'email']
     }, async (accessToken, refreshToken, profile, done) => {
-
         try {
             if (accessToken) {
 
@@ -26,14 +25,29 @@ function createSatergyGoogle() {
                 });
 
                 if (!user) {
-                    const newUser = User.create({
+                    const userRole = await Role.findOne({ roleName: 'Customer' });
+                    const newUser = User({
                         googleId: id,
                         firstName: refreshToken.name.givenName,
                         lastName: refreshToken.name.familyName,
                         userName: refreshToken.displayName,
+                        phone: '1234567890',
+                        password: `${refreshToken.displayName}@xxyz`,
                         email,
+                        role: userRole._id
 
                     })
+                    await newUser.save()
+                    const newWallet = Wallet({
+                        userId: newUser._id
+                    })
+                    const newCart = Cart({
+                        user_id: newUser._id
+                    })
+                    await newWallet.save();
+                    await newCart.save();
+
+                    return done(null, newUser);
                 }
                 user.googleId = id
 
@@ -43,7 +57,7 @@ function createSatergyGoogle() {
                 return done(null, user);
             }
         } catch (error) {
-            return done(err, null);
+            return done(error, null);
         }
 
     }));
@@ -53,8 +67,6 @@ function createSatergyGoogle() {
     });
 
     Passport.deserializeUser(async (id, done) => {
-        // Fetch the user from your database using the ID
-        // Replace `User.findById` with your actual database call
         const user = await User.findById(id)
         done(null, user);
     });
