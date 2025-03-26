@@ -564,7 +564,7 @@
                     contact: optionsRazorPay.user.contact
                 },
                 handler: function (response) {
-                    fetch("https://www.activecrop.shop/orders/payment/verify", {
+                    fetch("http://localhost:3000/orders/payment/verify", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -603,7 +603,7 @@
             }
         }
         function verifyPayment(order_id) {
-            fetch("https://www.activecrop.shop/orders/payment/verify", {
+            fetch("http://localhost:3000/orders/payment/verify", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

@@ -134,13 +134,9 @@
                             </div>
                         </div>
                         <canvas id="salesChart"></canvas>
-
                     </div>
                 </section>
-
         </div>
-
-
     </div>
     <script>
         const ctx = document.getElementById('salesChart').getContext('2d');
@@ -149,12 +145,9 @@
         const decodedString = salesDataStrings.replace(/&#34;/g, '"');
         const salesData = JSON.parse(decodedString);
 
-        console.log('salesData', salesData)
-
         const labels = salesData.map(sale => sale.month);
         const data = salesData.map(sale => sale.totalSales);
-
-
+        
         new Chart(ctx, {
             type: 'line',
             data: {

@@ -10,7 +10,7 @@ const options ={
         },
         servers:[
             {
-                url:'https://www.activecrop.shop'
+                url:'http://localhost:3000'
             },
         ],
     },
