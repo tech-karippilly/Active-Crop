@@ -49,46 +49,59 @@
           <div class="row">
             <div class="col">
               <label for="firstName" class="form-label lable-text">First Name</label>
-              <input type="text" class="form-control" name="firstName" id="firstName" required>
+              <input type="text" class="form-control" name="firstName" id="firstName">
+              <span class="error-message"></span>
             </div>
             <div class="col">
               <label for="lastName" class="form-label lable-text">Last Name</label>
-              <input type="text" class="form-control" name="lastName" id="lastName" required>
+              <input type="text" class="form-control" name="lastName" id="lastName">
+              <span class="error-message"></span>
             </div>
           </div>
+        
           <div class="mb-3">
-            <label for="lastName" class="form-label lable-text">User Name</label>
-            <input type="text" class="form-control" name="userName" id="userName" required>
+            <label for="userName" class="form-label lable-text">User Name</label>
+            <input type="text" class="form-control" name="userName" id="userName">
+            <span class="error-message"></span>
           </div>
+        
           <div class="row">
             <div class="col">
-              <label for="lastName" class="form-label lable-text">Phone</label>
-              <input type="text" class="form-control" name="phone" id="lastName" required>
+              <label for="phone" class="form-label lable-text">Phone</label>
+              <input type="text" class="form-control" name="phone" id="phone">
+              <span class="error-message"></span>
             </div>
             <div class="col">
               <label for="email" class="form-label lable-text">Email address</label>
-              <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp"
-                required>
+              <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp">
+              <span class="error-message"></span>
             </div>
           </div>
-
+        
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label lable-text">Password</label>
             <input type="password" class="form-control" name="password" id="exampleInputPassword1">
+            <span class="error-message"></span>
           </div>
+        
           <div class="mb-3">
-            <label for="confirmPassword" class="form-label lable-text"> Confrim Password</label>
+            <label for="confirmPassword" class="form-label lable-text">Confirm Password</label>
             <input type="password" class="form-control" name="confirmPassword" id="confirmPassword">
+            <span class="error-message"></span>
           </div>
+        
           <input type="hidden" id="referal" name="referal">
-
+        
           <div class="btn-contianer mb-3">
-            <button type="submit" class="btn ">Create Account</button>
+            <button type="submit" class="btn">Create Account</button>
           </div>
-          <div class=" btn-contianer mb-3 ">
-            <a class="link " href="/auth/login">Already have account</a>
+          
+          <div class="btn-contianer mb-3">
+            <a class="link" href="/auth/login">Already have an account?</a>
           </div>
+        
         </form>
+        
       </div>
     </div>
 
@@ -96,6 +109,70 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('signup-form');
+
+form.addEventListener('submit', function (event) {
+  event.preventDefault(); // Prevent form submission initially
+  
+  const firstName = document.getElementById('firstName');
+  const lastName = document.getElementById('lastName');
+  const userName = document.getElementById('userName');
+  const phone = document.getElementById('phone');
+  const email = document.getElementById('exampleInputEmail1');
+  const password = document.getElementById('exampleInputPassword1');
+  const confirmPassword = document.getElementById('confirmPassword');
+
+  let errors = [];
+  
+  function showError(input, message) {
+    const errorSpan = input.nextElementSibling;
+    errorSpan.innerText = message;
+    errorSpan.style.color = 'red';
+  }
+  
+  function clearErrors() {
+    document.querySelectorAll('.error-message').forEach(span => span.innerText = '');
+  }
+
+  clearErrors();
+
+  if (!firstName.value.trim()) {
+    errors.push('First Name is required.');
+    showError(firstName, 'First Name is required.');
+  }
+  if (!lastName.value.trim()) {
+    errors.push('Last Name is required.');
+    showError(lastName, 'Last Name is required.');
+  }
+  if (!userName.value.trim()) {
+    errors.push('User Name is required.');
+    showError(userName, 'User Name is required.');
+  }
+  if (!phone.value.trim().match(/^\d{10}$/)) {
+    errors.push('Enter a valid 10-digit phone number.');
+    showError(phone, 'Enter a valid 10-digit phone number.');
+  }
+  if (!email.value.trim().match(/^\S+@\S+\.\S+$/)) {
+    errors.push('Enter a valid email address.');
+    showError(email, 'Enter a valid email address.');
+  }
+  if (password.value.length < 6) {
+    errors.push('Password must be at least 6 characters long.');
+    showError(password, 'Password must be at least 6 characters long.');
+  }
+  if (password.value !== confirmPassword.value) {
+    errors.push('Passwords do not match.');
+    showError(confirmPassword, 'Passwords do not match.');
+  }
+  
+  if (errors.length > 0) {
+    return;
+  }
+  
+  form.submit(); // Submit the form if all validations pass
+});
+
+
       const referalInput = document.getElementById('referal');
       const urlParams = new URLSearchParams(window.location.search);
       const referalCode = urlParams.get('referalCode');
