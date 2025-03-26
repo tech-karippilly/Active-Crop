@@ -10,8 +10,6 @@ import crypto from 'crypto'
 import createOrder from '../../../model/order.js'
 config()
 
-console.log(process.env.KEY_ID)
-console.log(process.env.KEY_SECRETE)
 const razorpay = new Razorpay({
     key_id: process.env.KEY_ID,
     key_secret: process.env.KEY_SECRETE

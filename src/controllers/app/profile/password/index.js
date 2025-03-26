@@ -7,12 +7,12 @@ async function resetPasswordPage(req, res) {
     const jwtDecode = jwt.verify(access_token, process.env.JWT_SECRET_ACCESS_TOKEN)
     const userId = jwtDecode.userId
     const currentUser = await User.findById(userId)
-    res.status(200).render(USER_PASSWORD_REST_PAGE,{currentUser})
+    res.status(200).render(USER_PASSWORD_REST_PAGE, { currentUser })
 }
 
 async function resetPassword(req, res) {
     try {
-        const { password } = req.body
+        const { current, password } = req.body
 
         const access_token = req.session.accessToken
         if (access_token) {
@@ -21,6 +21,20 @@ async function resetPassword(req, res) {
             const currentUser = await User.findById(userId)
 
             if (currentUser) {
+
+                if (currentUser.isSecurityNeeded){
+                    currentUser.password = password
+                    currentUser.isSecurityNeeded=false
+                    currentUser.save()
+                    return res.status(200).json({ message: "Password Reset Successfully", alertType: "alert-success", redirect: '/user/profile' })
+                }
+
+                const isPasswordValid = await currentUser.comparePassword(current);
+
+                if (!isPasswordValid) {
+                    return res.status(400).json({ message: "Invalid password", alertType: "alert-danger", })
+                }
+
                 currentUser.password = password
                 currentUser.save()
                 return res.status(200).json({ message: "Password Reset Successfully", alertType: "alert-success", redirect: '/user/profile' })
@@ -28,6 +42,7 @@ async function resetPassword(req, res) {
             return res.status(404).json({ message: "User Not Found", alertType: "alert-danger" })
         }
     } catch (error) {
+        console.log(error)
         res.status(HTTP_SERVER_ERROR).json({ message: 'Internal Server Error', alertType: 'alert-danger' })
     }
 }
