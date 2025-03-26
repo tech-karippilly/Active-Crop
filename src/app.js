@@ -40,7 +40,7 @@ import { NOT_FOUNT_PAGE } from "./constans/page.js";
 import swaggerSpec from "./utils/swagger.js";
 import swaggerDocument from "./utils/swaggerDocuments.js";
 import { catagoerySearch } from "./controllers/app/home/index.js";
-import { Adminprotect } from "./middleware/adminAuthMiddleware.js";
+import { Adminprotect, isAdminLoggedIn } from "./middleware/adminAuthMiddleware.js";
 import { checkUserBlocked } from "./middleware/checkUserBlocked.js";
 
 const app = express()
@@ -100,9 +100,9 @@ app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(combinedSwaggerSpec))
 // ADMIN ROUTES
 
 
-app.use(ADMIN_AUTH_BASE, adiminAuthRoute)
+app.use(ADMIN_AUTH_BASE, isAdminLoggedIn,adiminAuthRoute)
 app.use('/api/admin/role', roleAuth)
-app.use('/admin/dashboard',dashboardRoute)
+app.use('/admin/dashboard',Adminprotect,dashboardRoute)
 app.use(ADMIN_CATAGOERY_BASE,Adminprotect, categoeryRoute)
 app.use(ADMIN_PRODUCTS_BASE, Adminprotect,productRoute)
 app.use(ADMIN_CUSTOMER_BASE,Adminprotect,customerRoute)
