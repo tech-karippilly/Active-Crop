@@ -19,6 +19,7 @@ async function renderCreatePage(req, res) {
         const products = await Product.find({ catagoery_id: '6793fd0029c4fd78c2423e98' })
         const catagoery = await Categoery.find()
         const offerTypes = ['percentage', 'flat_discount'];
+        
         res.status(HTTP_SUCCESS).render(ADMIN_OFFERS_CREATE_PAGE, { catagoery, products, offerTypes, });
     } catch (error) {
         res.status(HTTP_SERVER_ERROR).render(ADMIN_OFFERS_CREATE_PAGE, { catagoery: [], products: [], offerTypes: [] });
@@ -112,6 +113,7 @@ async function createProductOffer(req, res) {
 
         res.status(HTTP_CREATE).json({ message: 'Offer created successfully', alertType: 'alert-success', redirect: '/admin/offers' });
     } catch (error) {
+        console.log(error.message)
         res.status(HTTP_SERVER_ERROR).json({ message: "Internal Server Error", error: error.message });
     }
 }

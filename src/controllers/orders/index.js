@@ -116,7 +116,7 @@ async function orderStatus(req, res) {
                 await order.save();
                 return res.status(200).json({ message: "Order status updated successfully.", updatedStatus: order.deliveryStatus });
             } else if (status === 'Rejected') {
-                order.deliveryStatus = 'Cancelation Rejected';
+                order.deliveryStatus = 'Processing';
                 await order.save();
                 return res.status(200).json({ message: "Order status updated successfully.", updatedStatus: order.deliveryStatus });
             }

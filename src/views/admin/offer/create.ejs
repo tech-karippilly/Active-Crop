@@ -96,7 +96,7 @@
                             <label for="product" class="form-label">Product</label>
                             <select class="form-select" id="product" required>
                                 <% products.forEach(function(product) { %>
-                                    <option value="<%= product.id %>">
+                                    <option value="<%= product._id %>">
                                         <%= product.product_name %>
                                     </option>
                                     <% }); %>
@@ -193,13 +193,14 @@
 
 
             products.products.forEach(function (product) {
+                console.log('displayproduct',product)
                 var option = document.createElement('option');
-                option.value = product.id;
+                option.value = product._id;
                 option.textContent = product.product_name;
                 productSelect.appendChild(option);
             });
         }
-        
+
         document.getElementById('offerForm').addEventListener('submit', function (event) {
             let isValid = true;
             let offerType = document.getElementById('offerType').value;
@@ -210,6 +211,7 @@
             let validFrom = document.getElementById('validFrom').value;
             let validUntil = document.getElementById('validUntil').value;
 
+            console.log("product", document.getElementById('product'))
             if (!['percentage', 'flat'].includes(offerType)) {
                 document.getElementById('offerType').classList.add('is-invalid');
                 isValid = false;
@@ -258,9 +260,11 @@
             } else {
                 document.getElementById('validUntil').classList.remove('is-invalid');
             }
+          
             if (isValid) {
                 event.preventDefault()
                 event.stopPropagation()
+                
                 const formData = {
                     productId: product,
                     offer_type: offerType,

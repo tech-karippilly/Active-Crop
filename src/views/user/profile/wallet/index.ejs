@@ -171,8 +171,12 @@
                                 <h4>Transaction History</h4>
                                 <ul class="list-group" id="transaction-list">
                                     <% transactions.forEach(transaction => { %>
-                                        <li class="list-group-item d-flex justify-content-between">
-                                            <span class="text-capitalize"><%= transaction.description %></span>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <span class="text-capitalize"><%= transaction.description %></span>
+                                                <br>
+                                                <small class="text-muted"><%= new Date(transaction.createdAt).toLocaleString() %></small>
+                                            </div>
                                             <span class="<%= transaction.transactionMode === 'debit' ? 'text-danger' : 'text-success' %>">
                                                 <%= transaction.transactionMode === 'debit' ? '-' : '+' %>₹<%= Math.abs(transaction.amount) %>
                                             </span>
@@ -181,6 +185,7 @@
                                 </ul>
                             </div>
                         <% } %>
+                        
                     </div>
                 </div>
 
