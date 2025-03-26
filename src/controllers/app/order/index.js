@@ -354,7 +354,7 @@ async function verifyPayment(req, res) {
         if (order_id) {
             const order = await Order.findOne({ orderNumber: order_id })
             order.paymentStatus = 'Failed'
-            order.deliveryStatus = 'Cancelled'
+            order.deliveryStatus = 'Pending'
             await order.save()
             return res.status(400).json({ message: 'Order failed', alertType: 'alert-danger', redirect: `/orders/order-failed/${order._id}` });
         }
@@ -396,6 +396,13 @@ async function verifyPayment(req, res) {
         } else {
             order.paymentStatus = 'Failed'
             order.deliveryStatus = 'Pending'
+            for (const item of order.items) {
+                const currentProduct = await Product.findById(item.product_id);
+                if (currentProduct) {
+                    currentProduct.sales_count += item.quantity;
+                    await currentProduct.save();
+                }
+            }
             await order.save();
             return res.status(400).json({ message: 'Order Failed', alertType: 'alert-danger', redirect: `/orders/order-failed/${order._id}` });
         }

@@ -43,7 +43,7 @@ async function createAddress(req, res) {
             
             const currentUser = await User.findById(userId)
 
-            const address = await Address.findOne({ nickname, address_line_1, address_line_2 })
+            const address = await Address.findOne({ nickname, address_line_1, address_line_2,user_id:userId })
 
             if (address) {
                 return res.status(409).json({ message: 'Address already exist', alertype: 'alert-warning' })
