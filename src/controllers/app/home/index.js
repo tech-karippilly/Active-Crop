@@ -79,9 +79,9 @@ const catagoerySearch = async (req,res)=>{
                 cartLength = cart[0].items.length;
             }
 
-            return res.status(HTTP_SUCCESS).render(USER_HOME_PAGE, { isLogin: true, catagories:categories, currentUser, cartLength ,topProducts})
+            return res.status(HTTP_SUCCESS).render(USER_HOME_PAGE, { isLogin: true, categories:categories, currentUser, cartLength ,topProducts})
         }else{
-            return res.status(HTTP_SUCCESS).render(USER_HOME_PAGE, { isLogin: false, catagories:categories, currentUser:{},topProducts, cartLength:0 })
+            return res.status(HTTP_SUCCESS).render(USER_HOME_PAGE, { isLogin: false, categories:categories, currentUser:{},topProducts, cartLength:0 })
         }
 
     } catch (err) {

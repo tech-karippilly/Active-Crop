@@ -139,7 +139,7 @@ async function placeOreder(req, res) {
                     contact: user.phone
                 },
                 order_id: razorPayOrder.id,
-                redirect: `https://www.activecrop.shop/orders/order-success/${razorPayOrder.id}`,
+                redirect: `http://localhost:3000/orders/order-success/${razorPayOrder.id}`,
                 redirect: true,
             }
             
@@ -278,7 +278,7 @@ async function placeOreder(req, res) {
                                 contact: user.phone
                             },
                             order_id: razorPayOrder.id,
-                            redirect: `https://www.activecrop.shop/orders/order-success/${razorPayOrder.id}`,
+                            redirect: `http://localhost:3000/orders/order-success/${razorPayOrder.id}`,
                         }
                     });
                 }
@@ -464,7 +464,7 @@ async function RetryOrder(req, res) {
                 contact: user.phone
             },
             order_id: order.orderNumber,
-            redirect: `https://www.activecrop.shop/orders/order-success/${order.orderNumber}`,
+            redirect: `http://localhost:3000/orders/order-success/${order.orderNumber}`,
             redirect: true,
         }
 
