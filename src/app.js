@@ -41,6 +41,7 @@ import swaggerSpec from "./utils/swagger.js";
 import swaggerDocument from "./utils/swaggerDocuments.js";
 import { catagoerySearch } from "./controllers/app/home/index.js";
 import { Adminprotect } from "./middleware/adminAuthMiddleware.js";
+import { checkUserBlocked } from "./middleware/checkUserBlocked.js";
 
 const app = express()
 
@@ -115,13 +116,13 @@ app.use(ADMIN_TRANSACTION_BASE,Adminprotect,transactionRoutes)
 app.use(USER_LOGIN_BASE, userRoute)
 app.use(USER_OTP_BASE, otpRoute)
 app.use('/api/auth/token', tokenRoute)
-app.use(USER_PRODUCTS,userProductsRoute)
-app.use(USER_PROFILE,profileRoute)
-app.use(USER_CART_BASE,cartRoute)
-app.use(ORDERS_BASE,orderRoute)
-app.use(WHISLIST_BASE,whishlistRoutes)
-app.use(USER_COUPON_BASE,userCouponRoutes)
-app.use(WALLET_BASE,walletRoutes)
+app.use(USER_PRODUCTS,checkUserBlocked, userProductsRoute)
+app.use(USER_PROFILE,checkUserBlocked, profileRoute)
+app.use(USER_CART_BASE,checkUserBlocked,cartRoute)
+app.use(ORDERS_BASE,checkUserBlocked,orderRoute)
+app.use(WHISLIST_BASE,checkUserBlocked,whishlistRoutes)
+app.use(USER_COUPON_BASE,checkUserBlocked,userCouponRoutes)
+app.use(WALLET_BASE,checkUserBlocked,walletRoutes)
 
 app.use('/page',pageRoute)
 
