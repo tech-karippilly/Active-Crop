@@ -1,4 +1,4 @@
-import { Order } from "../../models/index.js"
+import { Categoery, Order, Product } from "../../models/index.js"
 
 async function dasboardPage(req, res) {
     try {
@@ -119,10 +119,44 @@ async function dasboardPage(req, res) {
             totalSales: sale.totalSales
         }));
 
+        const topProducts = await Product.aggregate([
+            {
+              $match: {
+                status:'Available',isBlocked:false
+              }
+            },
+            {
+              $sort:{sales_count:-1}
+            },
+            {
+              $limit: 10
+            },
+            
+          ])
 
-        res.status(200).render('admin/dashboard/dasbboard', { activePage: 'Dashboard', totalOrders, totalDiscoutAmount, totalAmount, successOrders, pendingOrders, sales:formattedSales, })
+          console.log("totalproducts",topProducts)
+
+          const topCatagories = await Categoery.aggregate([
+            {
+                $sort:{sales_count:-1}
+              },
+              {
+                $limit: 10
+              },
+          ])
+
+
+        res.status(200).render('admin/dashboard/dasbboard', { activePage: 'Dashboard', totalOrders,topProducts, topCatagories,totalDiscoutAmount, totalAmount, successOrders, pendingOrders, sales:formattedSales, })
     } catch (error) {
-
+        res.status(500).render('admin/dashboard/dasbboard',{ activePage: 'Dashboard', 
+            totalOrders:[],
+            topProducts:[], 
+            topCatagories:[],
+            totalDiscoutAmount:0, 
+            totalAmount:0, 
+            successOrders:0, 
+            pendingOrders:0, 
+            sales:[], })
     }
 
 }

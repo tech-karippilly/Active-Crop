@@ -27,7 +27,7 @@ async function renderWalletPage(req, res) {
                 await wallets.save()
             }
 
-            
+            console.log(wallet)
 
             return res.status(200).render(USER_WALLET_PAGE, { currentUser, wallet, transactions })
         }
