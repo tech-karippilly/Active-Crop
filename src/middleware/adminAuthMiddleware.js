@@ -168,6 +168,14 @@ export const Adminprotect = async (req, res, next) => {
     }
 };
 
+export const isAdminLoggedIn = async (req,res,next)=>{
+    if (req.session && req.session.accessToken){
+        res.status(200).redirect('/admin/dashboard')
+    }else{
+        next()
+    }
+}
+
 function renderResponse(pageName, res, status, alertMessage, alertType, redirectUrl) {
     res.status(status).render(pageName, { alertMessage, alertType, redirectUrl });
 }
