@@ -10,6 +10,8 @@ export const checkUserBlocked =async(req,res,next)=>{
 
         if (currentUser.isBlocked){
             return res.redirect('/auth/login');
+        }else{
+            next()
         }
 
     }catch{
