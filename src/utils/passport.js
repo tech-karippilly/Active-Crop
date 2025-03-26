@@ -34,8 +34,8 @@ function createSatergyGoogle() {
                         phone: '1234567890',
                         password: `${refreshToken.displayName}@xxyz`,
                         email,
-                        role: userRole._id
-
+                        role: userRole._id,
+                        isSecurityNeeded:true
                     })
                     await newUser.save()
                     const newWallet = Wallet({

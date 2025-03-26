@@ -25,6 +25,7 @@ const userSchema = mongoose.Schema({
     password: { type: String, required: true },
     isBlocked: { type: Boolean, default: false },
     isVerifyed:{type:Boolean,default:false},
+    isSecurityNeeded:{type:Boolean,default:false},
     role: { type: Schema.Types.ObjectId, ref: 'Role', required: true },
     profileImage:{type:String,required:false}
 })
