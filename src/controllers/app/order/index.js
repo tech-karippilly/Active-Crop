@@ -355,6 +355,12 @@ async function verifyPayment(req, res) {
             const order = await Order.findOne({ orderNumber: order_id })
             order.paymentStatus = 'Failed'
             order.deliveryStatus = 'Pending'
+            for (const item of order.items) {
+                const currentProduct = await Product.findById(item.product_id);
+                
+                currentProduct.stock_quantity = Number(currentProduct.stock_quantity)+ Number(item.quantity)
+                await currentProduct.save()
+            }
             await order.save()
             return res.status(400).json({ message: 'Order failed', alertType: 'alert-danger', redirect: `/orders/order-failed/${order._id}` });
         }
