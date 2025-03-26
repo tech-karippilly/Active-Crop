@@ -185,7 +185,7 @@
                                         <%= orders.paymentStatus %>
                                     </span></p>
 
-
+                                    
                                 <!-- Product Details Section -->
                                 <h4>Product Details:</h4>
                                 <ul id="productList" class="list-group">
@@ -564,7 +564,7 @@
                     contact: optionsRazorPay.user.contact
                 },
                 handler: function (response) {
-                    fetch("http://localhost:3000/orders/payment/verify", {
+                    fetch("https://www.activecrop.shop/orders/payment/verify", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -603,7 +603,7 @@
             }
         }
         function verifyPayment(order_id) {
-            fetch("http://localhost:3000/orders/payment/verify", {
+            fetch("https://www.activecrop.shop/orders/payment/verify", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
