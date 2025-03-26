@@ -93,7 +93,13 @@ async function placeOreder(req, res) {
         const cart = await Cart.findById(cartId);
         const address = await Address.findById(addressId);
 
-        const haveQuantity = await checkProductQuantity(cart.items)
+        const haveQuantity = await checkProductQuantity(cart.items);
+        if (!haveQuantity.available) {
+            return res.status(400).json({ 
+                message: `Product ${haveQuantity.productName} is out of stock!`, 
+                alertType: 'alert-danger' 
+            });
+        }
 
         if (paymentMethod === 'razorpay') {
             const options = {
@@ -329,23 +335,15 @@ async function placeOreder(req, res) {
     }
 }
 
-async function checkProductQuantity(productList) {
-
-    const errorList = []
-
-    for (const product of productList) {
-        const currentProduct = await Product.findById(product.product_id)
-        const requiredQuantity = product.quantity
-        const curretStock = currentProduct.stock_quantity
-
-        const remaningQuantity = Number(curretStock) - Number(requiredQuantity)
-        if (remaningQuantity < 0) {
-            errorList.push({ name: currentProduct.product_name })
+const checkProductQuantity = async (cartItems) => {
+    for (const item of cartItems) {
+        const product = await Product.findById(item.product_id);
+        if (!product || product.stock_quantity < item.quantity) {
+            return { available: false, productName: product ? product.product_name : "Unknown" };
         }
     }
-
-    return errorList.length === 0 ? true : false
-}
+    return { available: true };
+};
 
 async function verifyPayment(req, res) {
     try {
