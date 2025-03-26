@@ -26,29 +26,29 @@
 
     <div class="main-container">
         <%- include('../../partials/adminSideBar') %>
-        <section class="container-section p-5  w-100">
-            <div class="alert-box" id="alert-box">
-                <% if (alertMessage) { %>
-                    <div class="alert alert-<%= alertType %>" id="alert">
-                        <% Object.entries(alertMessage).forEach(([key, value])=> { %>
-                            <p>
-                                <%= value %>
-                            </p>
-                            <% }); %>
-                    </div>
-                    <% } else{%>
-                        <div id="alert"></div>
-                        <%}%>
-            </div>
-            <div class="container-fluid  w-100">
-                <div>
-                    <h1>Update Product</h1>
+            <section class="container-section p-5  w-100">
+                <div class="alert-box" id="alert-box">
+                    <% if (alertMessage) { %>
+                        <div class="alert alert-<%= alertType %>" id="alert">
+                            <% Object.entries(alertMessage).forEach(([key, value])=> { %>
+                                <p>
+                                    <%= value %>
+                                </p>
+                                <% }); %>
+                        </div>
+                        <% } else{%>
+                            <div id="alert"></div>
+                            <%}%>
                 </div>
+                <div class="container-fluid  w-100">
+                    <div>
+                        <h1>Update Product</h1>
+                    </div>
 
-                <div class="catagoery-form">
+                    <div class="catagoery-form">
 
-                    <form id="create-update-form" enctype="multipart/form-data">
-                     
+                        <form id="create-update-form" enctype="multipart/form-data">
+
                             <div class="row">
                                 <div class="col-md-3 mb-4">
                                     <div class="card">
@@ -136,82 +136,81 @@
                                     </div>
                                 </div>
                             </div>
-                      
-                                <div class="row">
-                                    <div class="col">
-                                        <label for="product_image1" class="form-label">Select Product Image</label>
-                                        <input class="form-control" type="file" name="product_image" id="formFile1">
-                                        <input type="hidden" name="product_image1" id="product_image1_hidden">
-                                    </div>
-                                    <div class="col">
-                                        <label for="product_image2" class="form-label">Select Product Image</label>
-                                        <input class="form-control" type="file" name="product_image" id="formFile2">
-                                        <input type="hidden" name="product_image2" id="product_image2_hidden">
-                                    </div>
-                                    <div class="col">
-                                        <label for="product_image3" class="form-label">Select Product Image</label>
-                                        <input class="form-control" type="file" name="product_image" id="formFile3">
-                                        <input type="hidden" name="product_image3" id="product_image3_hidden">
-                                    </div>
-                                    <div class="col">
-                                        <label for="product_image4" class="form-label">Select Product Image</label>
-                                        <input class="form-control" type="file" name="product_image" id="formFile4">
-                                        <input type="hidden" name="product_image4" id="product_image4_hidden">
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="product_name" class="form-label label-text">Product Name</label>
-                                    <input type="text" value="<%=data.product_name %>" class="form-control"
-                                        name="product_name" id="product_name">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="price" class="form-label label-text">Product Price</label>
-                                    <input type="text" value="<%=data.price %>" class="form-control" name="price"
-                                        id="price">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="stock_quantity" class="form-label label-text">Stock Quantity</label>
-                                    <input type="text" class="form-control" value="<%=data.stock_quantity %>"
-                                        name="stock_quantity" id="stock_quantity">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="catagoery">Select Catagoery</label>
-                                    <div class="dropdown">
-                                        <button class="btn border dropdown-toggle" type="button"
-                                            data-bs-toggle="dropdown" aria-expanded="false" id="catagoery-name">
-                                            <%= activeCatagoery.catagoery_name %>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-dark">
 
-                                            <% catagories.forEach((catagoery)=>{ %>
-                                                <li><a class="dropdown-item "
-                                                        onclick="selectCategory('<%= catagoery._id %>','<%= catagoery.catagoery_name %>')">
-                                                        <%= catagoery.catagoery_name %>
-                                                    </a></li>
-                                                <% }); %>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="product_image1" class="form-label">Select Product Image</label>
+                                    <input class="form-control" type="file" name="product_image" id="formFile1">
+                                    <input type="hidden" name="product_image1" id="product_image1_hidden">
+                                </div>
+                                <div class="col">
+                                    <label for="product_image2" class="form-label">Select Product Image</label>
+                                    <input class="form-control" type="file" name="product_image" id="formFile2">
+                                    <input type="hidden" name="product_image2" id="product_image2_hidden">
+                                </div>
+                                <div class="col">
+                                    <label for="product_image3" class="form-label">Select Product Image</label>
+                                    <input class="form-control" type="file" name="product_image" id="formFile3">
+                                    <input type="hidden" name="product_image3" id="product_image3_hidden">
+                                </div>
+                                <div class="col">
+                                    <label for="product_image4" class="form-label">Select Product Image</label>
+                                    <input class="form-control" type="file" name="product_image" id="formFile4">
+                                    <input type="hidden" name="product_image4" id="product_image4_hidden">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="product_name" class="form-label label-text">Product Name</label>
+                                <input type="text" value="<%=data.product_name %>" class="form-control"
+                                    name="product_name" id="product_name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="price" class="form-label label-text">Product Price</label>
+                                <input type="text" value="<%=data.price %>" class="form-control" name="price"
+                                    id="price">
+                            </div>
+                            <div class="mb-3">
+                                <label for="stock_quantity" class="form-label label-text">Stock Quantity</label>
+                                <input type="text" class="form-control" value="<%=data.stock_quantity %>"
+                                    name="stock_quantity" id="stock_quantity">
+                            </div>
+                            <div class="mb-3">
+                                <label for="catagoery">Select Catagoery</label>
+                                <div class="dropdown">
+                                    <button class="btn border dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                        aria-expanded="false" id="catagoery-name">
+                                        <%= activeCatagoery.catagoery_name %>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-dark">
 
-                                        </ul>
-                                    </div>
-                                    <input type="text" class="form-control visually-hidden" name="catagoery_id"
-                                        id="catagoery_id" value="<%= activeCatagoery._id %>" required>
-                                </div>
+                                        <% catagories.forEach((catagoery)=>{ %>
+                                            <li><a class="dropdown-item "
+                                                    onclick="selectCategory('<%= catagoery._id %>','<%= catagoery.catagoery_name %>')">
+                                                    <%= catagoery.catagoery_name %>
+                                                </a></li>
+                                            <% }); %>
 
-                                <div class="mb-3">
-                                    <div class="form-floating">
-                                        <textarea class="form-control" placeholder="Leave description"
-                                            name="description" id="description"
-                                            style="height: 100px"><%=  data.description %></textarea>
-                                        <label for="description">Description</label>
-                                    </div>
+                                    </ul>
                                 </div>
-                                <div class="btn-container">
-                                    <button type="submit" class="btn button-style">Update Product</button>
+                                <input type="text" class="form-control visually-hidden" name="catagoery_id"
+                                    id="catagoery_id" value="<%= activeCatagoery._id %>" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="form-floating">
+                                    <textarea class="form-control" placeholder="Leave description" name="description"
+                                        id="description" style="height: 100px"><%=  data.description %></textarea>
+                                    <label for="description">Description</label>
                                 </div>
-                    </form>
+                            </div>
+                            <div class="btn-container">
+                                <button type="submit" class="btn button-style">Update Product</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
 
-        </section>
+            </section>
     </div>
 
 
@@ -289,9 +288,9 @@
                 previewImageOne.src = croppedImageDataUrl;
 
                 cropButton.style.display = 'none';
-                
+
                 cropper.destroy();
-                removeButton.style.display='block'
+                removeButton.style.display = 'block'
             }
         })
 
@@ -337,9 +336,9 @@
                 previewImageTwo.src = croppedImageDataUrl;
 
                 cropButtonTwo.style.display = 'none';
-                
+
                 cropper2.destroy();
-                removeButtonTwo.style.display='block'
+                removeButtonTwo.style.display = 'block'
             }
         })
 
@@ -385,7 +384,7 @@
 
                 cropButtonThree.style.display = 'none';
                 cropper3.destroy();
-                 removeButtonThree.style.display='block'
+                removeButtonThree.style.display = 'block'
             }
         })
 
@@ -430,7 +429,7 @@
                 previewImageFour.src = croppedImageDataUrl;
 
                 cropButtonFour.style.display = 'none';
-                
+
                 cropper4.destroy();
                 removeButtonFour.style.display = 'block';
             }
@@ -454,96 +453,206 @@
             document.getElementById('catagoery_id').value = categoryId
         }
 
-        const updateForm = document.getElementById('create-update-form')
+        document.addEventListener("DOMContentLoaded", function () {
+            const updateForm = document.getElementById("create-update-form");
 
-        updateForm.addEventListener('submit', async (events) => {
+            updateForm.addEventListener("submit", async (event) => {
+                event.preventDefault(); // Prevent default form submission
 
-            events.preventDefault()
-            let fileInputs = [
-                document.getElementById('formFile1'),
-                document.getElementById('formFile2'),
-                document.getElementById('formFile3'),
-                document.getElementById('formFile4')
-            ];
+                let isValid = true;
+                clearErrors();
 
-            fileInputs.forEach(function (input, index) {
+                // Select form fields
+                const productName = document.getElementById("product_name");
+                const price = document.getElementById("price");
+                const stockQuantity = document.getElementById("stock_quantity");
+                const category = document.getElementById("catagoery_id");
+                const description = document.getElementById("description");
 
-                if (input.files.length === 0) {
-                    const image = "<%= data.images[3] %>"
-                    if (index === 0) {
-                        document.getElementById('product_image1_hidden').value = `<%= data.images[0] %>`;
-                    } else if (index === 1) {
-                        document.getElementById('product_image2_hidden').value = `<%= data.images[1] %>`;
-                    } else if (index === 2) {
-                        document.getElementById('product_image3_hidden').value = `<%= data.images[2] %>`;
-                    } else if (index === 3) {
-                        document.getElementById('product_image4_hidden').value = `<%= data.images[3] %>`;
-                    }
+                let fileInputs = [
+                    document.getElementById("formFile1"),
+                    document.getElementById("formFile2"),
+                    document.getElementById("formFile3"),
+                    document.getElementById("formFile4"),
+                ];
+
+                let hiddenInputs = [
+                    document.getElementById("product_image1_hidden"),
+                    document.getElementById("product_image2_hidden"),
+                    document.getElementById("product_image3_hidden"),
+                    document.getElementById("product_image4_hidden"),
+                ];
+
+                // **Validation Checks**
+                if (productName.value.trim() === "") {
+                    showError(productName, "Product name is required.");
+                    isValid = false;
                 }
-            })
 
-            const alertBox = document.getElementById('alert-box')
-            const alertMessageDiv = document.getElementById('alert')
-            const formData = new FormData(updateForm)
+                if (price.value.trim() === "" || isNaN(price.value) || Number(price.value) <= 0) {
+                    showError(price, "Enter a valid product price.");
+                    isValid = false;
+                }
 
-            fetch('/admin/products/<%=data._id %>', {
-                method: "put",
-                body: formData
-            })
-                .then((response) => response.json())
-                .then((data) => {
+                if (stockQuantity.value.trim() === "" || isNaN(stockQuantity.value) || Number(stockQuantity.value) < 0) {
+                    showError(stockQuantity, "Enter a valid stock quantity.");
+                    isValid = false;
+                }
+
+                if (category.value.trim() === "") {
+                    showError(category, "Please select a category.");
+                    isValid = false;
+                }
+
+                if (description.value.trim() === "") {
+                    showError(description, "Product description is required.");
+                    isValid = false;
+                }
+
+
+
+                fileInputs.forEach(function (input, index) {
+
+                    if (input.files.length === 0) {
+                        const image = "<%= data.images[3] %>"
+                        if (index === 0) {
+                            document.getElementById('product_image1_hidden').value = `<%= data.images[0] %>`;
+                        } else if (index === 1) {
+                            document.getElementById('product_image2_hidden').value = `<%= data.images[1] %>`;
+                        } else if (index === 2) {
+                            document.getElementById('product_image3_hidden').value = `<%= data.images[2] %>`;
+                        } else if (index === 3) {
+                            document.getElementById('product_image4_hidden').value = `<%= data.images[3] %>`;
+                        }
+                    }
+                })
+
+                if (!isValid) return;
+
+
+                // **Submit Form Data**
+                const formData = new FormData(updateForm);
+                const alertBox = document.getElementById("alert-box");
+                const alertMessageDiv = document.getElementById("alert");
+
+                try {
+                    const response = await fetch(`/admin/products/<%= data._id %>`, {
+                        method: "PUT",
+                        body: formData,
+                    });
+
+                    const data = await response.json();
 
                     if (data.status === 200) {
-                        if (alertMessageDiv) {
-                            alertMessageDiv.classList.add('alert')
-                            alertMessageDiv.innerHTML = data.message
-                            alertMessageDiv.classList.add('alert-success')
-                            setTimeout(() => {
-                                alertMessageDiv.innerHTML = ''
-                                alertMessageDiv.classList.remove('alert')
-                                alertMessageDiv.classList.remove('alert-success')
-                                window.location.href = '/admin/products'
-                            }, 3000)
-                        }
-
-                        setTimeout(() => {
-
-                            window.location.href = '/admin/products'
-                        }, 3000)
+                        showAlert(alertMessageDiv, "success", data.message);
+                        setTimeout(() => (window.location.href = "/admin/products"), 3000);
                     } else {
-                        if (alertMessageDiv) {
-                            alertMessageDiv.classList.add('alert')
-
-                            if (typeof (data.message === Object)) {
-                                alertMessageDiv.innerHTML = JSON.stringify(data.message)
-                            } else {
-                                alertMessageDiv.innerHTML = data.message
-                            }
-
-                            alertMessageDiv.classList.add('alert-danger')
-                            setTimeout(() => {
-                                alertMessageDiv.innerHTML = ''
-                                alertMessageDiv.classList.remove('alert')
-                                alertMessageDiv.classList.remove('alert-success')
-                            }, 3000)
-                        }
+                        showAlert(alertMessageDiv, "danger", typeof data.message === "object" ? JSON.stringify(data.message) : data.message);
                     }
+                } catch (error) {
+                    showAlert(alertMessageDiv, "danger", error.message);
+                }
+            });
 
-                })
-                .catch((error) => {
-                    if (alertMessageDiv) {
-                        alertMessageDiv.innerHTML = error.message
-                        alertMessageDiv.classList.add('alert')
-                        alertMessageDiv.classList.add('alert-danger')
-                        setTimeout(() => {
-                            alertMessageDiv.innerHTML = ''
-                            alertMessageDiv.classList.remove('alert')
-                            alertMessageDiv.classList.remove('alert-success')
-                        }, 3000)
-                    }
+            // **Helper Functions**
+            function showError(input, message) {
+                const error = document.createElement("div");
+                error.className = "error-message text-danger mt-1";
+                error.innerText = message;
+                input.parentNode.appendChild(error);
+            }
 
-                })
-        })
+            function clearErrors() {
+                document.querySelectorAll(".error-message").forEach((error) => error.remove());
+            }
+
+            function showAlert(element, type, message) {
+                if (element) {
+                    element.className = `alert alert-${type}`;
+                    element.innerHTML = message;
+                    setTimeout(() => {
+                        element.innerHTML = "";
+                        element.className = "";
+                    }, 3000);
+                }
+            }
+        });
+
+
+        // const updateForm = document.getElementById('create-update-form')
+
+        // updateForm.addEventListener('submit', async (events) => {
+
+        //     events.preventDefault()
+
+
+
+
+
+
+
+        //     const alertBox = document.getElementById('alert-box')
+        //     const alertMessageDiv = document.getElementById('alert')
+        //     const formData = new FormData(updateForm)
+
+        //     fetch('/admin/products/<%=data._id %>', {
+        //         method: "put",
+        //         body: formData
+        //     })
+        //         .then((response) => response.json())
+        //         .then((data) => {
+
+        //             if (data.status === 200) {
+        //                 if (alertMessageDiv) {
+        //                     alertMessageDiv.classList.add('alert')
+        //                     alertMessageDiv.innerHTML = data.message
+        //                     alertMessageDiv.classList.add('alert-success')
+        //                     setTimeout(() => {
+        //                         alertMessageDiv.innerHTML = ''
+        //                         alertMessageDiv.classList.remove('alert')
+        //                         alertMessageDiv.classList.remove('alert-success')
+        //                         window.location.href = '/admin/products'
+        //                     }, 3000)
+        //                 }
+
+        //                 setTimeout(() => {
+
+        //                     window.location.href = '/admin/products'
+        //                 }, 3000)
+        //             } else {
+        //                 if (alertMessageDiv) {
+        //                     alertMessageDiv.classList.add('alert')
+
+        //                     if (typeof (data.message === Object)) {
+        //                         alertMessageDiv.innerHTML = JSON.stringify(data.message)
+        //                     } else {
+        //                         alertMessageDiv.innerHTML = data.message
+        //                     }
+
+        //                     alertMessageDiv.classList.add('alert-danger')
+        //                     setTimeout(() => {
+        //                         alertMessageDiv.innerHTML = ''
+        //                         alertMessageDiv.classList.remove('alert')
+        //                         alertMessageDiv.classList.remove('alert-success')
+        //                     }, 3000)
+        //                 }
+        //             }
+
+        //         })
+        //         .catch((error) => {
+        //             if (alertMessageDiv) {
+        //                 alertMessageDiv.innerHTML = error.message
+        //                 alertMessageDiv.classList.add('alert')
+        //                 alertMessageDiv.classList.add('alert-danger')
+        //                 setTimeout(() => {
+        //                     alertMessageDiv.innerHTML = ''
+        //                     alertMessageDiv.classList.remove('alert')
+        //                     alertMessageDiv.classList.remove('alert-success')
+        //                 }, 3000)
+        //             }
+
+        //         })
+        // })
 
         function dataURLToBlob(dataURL) {
             const binaryString = atob(dataURL.split(',')[1]);
